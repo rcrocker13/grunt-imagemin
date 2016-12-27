@@ -8,28 +8,26 @@
 
 module.exports = function(grunt) {
 
-  grunt.initConfig({
 
-    imagemin: {
-      jpg: {
-        options: {
-          optimizationLevel: 7,
-          progressive: true
-        },
-        dynamic: {
-          files: [{
-            cwd: "images_src",
-            expand: true,
-            src: ["images_src/*.jpg"],
-            dest: "images"
-          }]
+  grunt.initConfig({
+      "imagemagick-resize":{
+        dev:{
+          from:'images_src',
+          to:'images',
+          files:'resized.jpg',
+          props:{
+            width:600
+          }
+        }
+      },"imagemagick-convert":{
+        dev:{
+          args:['*.jpg','-resize', '25x25', 'resizeme-small.jpg']
         }
       }
-    }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-imagemin');
+  grunt.loadNpmTasks('grunt-imagemagick');
 
-  grunt.registerTask( "default", ["imagemin"]);
+  grunt.registerTask( "default", ["imagemagick"]);
 
 };
