@@ -8,26 +8,28 @@
 
 module.exports = function(grunt) {
 
-
   grunt.initConfig({
-      "imagemagick-resize":{
-        dev:{
-          from:'images_src',
-          to:'images',
-          files:'resized.jpg',
-          props:{
-            width:600
-          }
-        }
-      },"imagemagick-convert":{
-        dev:{
-          args:['*.jpg','-resize', '25x25', 'resizeme-small.jpg']
-        }
+    responsive_images: {
+      dev: {
+        options: {
+          // Task-specific options go here.
+          engine: "im",
+          sizes: [{name: "med-600", width: 600, quality: 50}],
+          separator: "-"
+        },
+        files: [{
+          // Target-specific file lists and/or options go here.
+          expand: true,
+          src: ["*.jpg"],
+          cwd: "images_src",
+          dest: "images"
+        }]  
       }
-  });
+    }
+  })
 
-  grunt.loadNpmTasks('grunt-imagemagick');
+  grunt.loadNpmTasks('grunt-responsive-images');
 
-  grunt.registerTask( "default", ["imagemagick"]);
+  grunt.registerTask( "default", ["responsive_images"]);
 
 };
